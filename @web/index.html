@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - FINTJAM</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-logo">FINTJAM</div>
+            <nav>
+                <a href="index.html" class="nav-link active">DASHBOARD</a>
+                <a href="settings.html" class="nav-link">SETTINGS</a>
+                <a href="#" class="nav-link" style="margin-top: auto; color: var(--danger-color);" id="logoutBtn">LOGOUT</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="top-bar">
+                <h2>SYSTEM OVERVIEW</h2>
+                <div>
+                    <span style="color: var(--text-secondary); margin-right: 1rem;" id="agentName">AGENT: USERNAME</span>
+                    <button class="btn btn-outline" style="padding: 0.5rem 1rem;" id="printBtn">PRINT REPORT</button>
+                </div>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <div class="card-title">TOTAL BALANCE</div>
+                    <div class="card-value" id="totalBalance">Rp 0</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">TOTAL INCOME</div>
+                    <div class="card-value value-income" id="totalIncome">Rp 0</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">TOTAL EXPENSE</div>
+                    <div class="card-value value-expense" id="totalExpense">Rp 0</div>
+                </div>
+                <div class="card" style="border-color: var(--primary-color);">
+                    <div class="card-title">MONTHLY LIMIT</div>
+                    <div class="card-value" id="monthlyLimitDisplay">Rp 0</div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="txChart"></canvas>
+            </div>
+
+            <div class="grid" style="grid-template-columns: 1fr 2fr;">
+                <div class="card">
+                    <h3 style="margin-bottom: 1.5rem; color: var(--text-secondary);">ADD RECORD</h3>
+                    <form id="txForm">
+                        <div class="form-group">
+                            <label class="form-label">TYPE</label>
+                            <select id="txType" class="form-control" required>
+                                <option value="expense">EXPENSE</option>
+                                <option value="income">INCOME</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">CATEGORY</label>
+                            <select id="txCategory" class="form-control" required>
+                                <option value="Makanan & Minuman">Makanan & Minuman</option>
+                                <option value="Transportasi">Transportasi</option>
+                                <option value="Belanja">Belanja</option>
+                                <option value="Gaji / Pendapatan">Gaji / Pendapatan</option>
+                                <option value="Investasi">Investasi</option>
+                                <option value="Temen Ngutang">Temen Ngutang</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">AMOUNT (IDR)</label>
+                            <input type="number" id="txAmount" class="form-control" placeholder="IDR Amount" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">DESCRIPTION</label>
+                            <input type="text" id="txDescription" class="form-control" placeholder="Optional notes">
+                        </div>
+                        <button type="submit" class="btn btn-block">INJECT DATA</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <div class="list-header">
+                        <h3 style="color: var(--text-secondary);">TRANSACTION LOGS</h3>
+                    </div>
+                    <div class="transaction-list" id="transactionList">
+                        <!-- Dynamic items will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Alert Placeholder -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - FINTJAM</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-logo">FINTJAM</div>
+            <nav>
+                <a href="index.html" class="nav-link">DASHBOARD</a>
+                <a href="settings.html" class="nav-link active">SETTINGS</a>
+                <a href="#" class="nav-link" style="margin-top: auto; color: var(--danger-color);" id="logoutBtn">LOGOUT</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="top-bar">
+                <h2>SYSTEM SETTINGS</h2>
+            </div>
+
+            <div class="grid" style="grid-template-columns: 1fr;">
+                <div class="card" style="max-width: 600px;">
+                    <h3 style="margin-bottom: 1.5rem; color: var(--text-secondary);">UPDATE CREDENTIALS & LIMITS</h3>
+                    <form id="settingsForm">
+                        <div class="form-group">
+                            <label class="form-label">NEW USERNAME</label>
+                            <input type="text" class="form-control" placeholder="Leave blank to keep current">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">NEW PASSWORD</label>
+                            <input type="password" class="form-control" placeholder="Leave blank to keep current">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">NEW MONTHLY LIMIT (IDR)</label>
+                            <input type="number" class="form-control" placeholder="e.g. 5000000">
+                        </div>
+                        <button type="submit" class="btn">APPLY CHANGES</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
