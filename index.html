@@ -15,8 +15,8 @@
             --card-border: rgba(255, 255, 255, 0.08);
             --text-main: #ffffff;
             --text-muted: #a0aec0;
-            --accent-v1: #3b82f6;
-            /* Blue */
+            --accent-v1: #ef4444;
+            /* Red */
             --accent-v2: #8b5cf6;
             /* Purple */
         }
@@ -135,9 +135,9 @@
 
         .card-v1:hover {
             transform: translateY(-10px);
-            border-color: rgba(59, 130, 246, 0.5);
-            box-shadow: 0 20px 40px -10px rgba(59, 130, 246, 0.3),
-                0 0 20px rgba(59, 130, 246, 0.2) inset;
+            border-color: rgba(239, 68, 68, 0.5);
+            box-shadow: 0 20px 40px -10px rgba(239, 68, 68, 0.3),
+                0 0 20px rgba(239, 68, 68, 0.2) inset;
         }
 
         .card-v2:hover {
@@ -167,9 +167,9 @@
         }
 
         .card-v1 .card-icon {
-            background: rgba(59, 130, 246, 0.1);
+            background: rgba(239, 68, 68, 0.1);
             color: var(--accent-v1);
-            border: 1px solid rgba(59, 130, 246, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.2);
         }
 
         .card-v2 .card-icon {
@@ -179,7 +179,7 @@
         }
 
         .card-v1:hover .card-icon {
-            box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
+            box-shadow: 0 0 30px rgba(239, 68, 68, 0.4);
         }
 
         .card-v2:hover .card-icon {
@@ -221,9 +221,9 @@
         }
 
         .card-v1 .card-btn {
-            background: rgba(59, 130, 246, 0.1);
+            background: rgba(239, 68, 68, 0.1);
             color: var(--accent-v1);
-            border: 1px solid rgba(59, 130, 246, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.2);
         }
 
         .card-v2 .card-btn {
@@ -235,7 +235,7 @@
         .card-v1:hover .card-btn {
             background: var(--accent-v1);
             color: white;
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
             border-color: transparent;
         }
 
@@ -252,6 +252,68 @@
 
         .card:hover .arrow {
             transform: translateX(5px);
+        }
+
+        .disclaimer-box {
+            margin-top: 4rem;
+            max-width: 800px;
+            width: 100%;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 2px;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            border-radius: 16px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .disclaimer-content {
+            background: var(--bg-color);
+            border-radius: 14px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+        }
+
+        .disclaimer-content h3 {
+            color: #ec4899;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .disclaimer-content p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 0.8rem;
+        }
+
+        .powered-badge {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.6rem 1.2rem;
+            font-weight: bold;
+            font-family: 'Inter', sans-serif;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid var(--accent-v2);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.5), 0 0 20px rgba(139, 92, 246, 0.3) inset;
+            text-shadow: 0 0 8px rgba(139, 92, 246, 0.8);
+            animation: pulse-neon 2s infinite alternate;
+        }
+
+        @keyframes pulse-neon {
+            0% {
+                box-shadow: 0 0 10px rgba(139, 92, 246, 0.5), 0 0 20px rgba(139, 92, 246, 0.3) inset;
+                text-shadow: 0 0 8px rgba(139, 92, 246, 0.8);
+            }
+            100% {
+                box-shadow: 0 0 20px rgba(139, 92, 246, 0.8), 0 0 30px rgba(139, 92, 246, 0.5) inset;
+                text-shadow: 0 0 12px rgba(139, 92, 246, 1);
+            }
         }
 
         @media (max-width: 768px) {
@@ -305,6 +367,15 @@
                 </svg>
             </div>
         </a>
+    </div>
+
+    <div class="disclaimer-box">
+        <div class="disclaimer-content">
+            <h3>PROJECT STATUS: 100% AI-GENERATED</h3>
+            <p>Seluruh kode (HTML, CSS, JS) di v1 dan v2 dihasilkan murni melalui Systematic Prompting tanpa pengetikan manual (Zero Manual Coding). Hal ini ditujukan untuk workshop dan mendemonstrasikan kapabilitas dari tema vibecoding.</p>
+            <p>Project ini adalah bagian dari <strong>Workshop iFest: The Era of Vibe Coding</strong>.</p>
+            <div class="powered-badge">Powered by Stitch</div>
+        </div>
     </div>
 
 </body>
