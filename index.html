@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,8 +15,10 @@
             --card-border: rgba(255, 255, 255, 0.08);
             --text-main: #ffffff;
             --text-muted: #a0aec0;
-            --accent-v1: #3b82f6; /* Blue */
-            --accent-v2: #8b5cf6; /* Purple */
+            --accent-v1: #3b82f6;
+            /* Blue */
+            --accent-v2: #8b5cf6;
+            /* Purple */
         }
 
         * {
@@ -39,7 +42,8 @@
         }
 
         /* Ambient Background Glow */
-        body::before, body::after {
+        body::before,
+        body::after {
             content: '';
             position: absolute;
             width: 400px;
@@ -49,7 +53,7 @@
             opacity: 0.15;
             z-index: -1;
         }
-        
+
         body::before {
             background-color: var(--accent-v1);
             top: -100px;
@@ -124,7 +128,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
             opacity: 0;
             transition: opacity 0.4s ease;
         }
@@ -133,14 +137,14 @@
             transform: translateY(-10px);
             border-color: rgba(59, 130, 246, 0.5);
             box-shadow: 0 20px 40px -10px rgba(59, 130, 246, 0.3),
-                        0 0 20px rgba(59, 130, 246, 0.2) inset;
+                0 0 20px rgba(59, 130, 246, 0.2) inset;
         }
 
         .card-v2:hover {
             transform: translateY(-10px);
             border-color: rgba(139, 92, 246, 0.5);
             box-shadow: 0 20px 40px -10px rgba(139, 92, 246, 0.3),
-                        0 0 20px rgba(139, 92, 246, 0.2) inset;
+                0 0 20px rgba(139, 92, 246, 0.2) inset;
         }
 
         .card:hover::before {
@@ -173,11 +177,11 @@
             color: var(--accent-v2);
             border: 1px solid rgba(139, 92, 246, 0.2);
         }
-        
+
         .card-v1:hover .card-icon {
             box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
         }
-        
+
         .card-v2:hover .card-icon {
             box-shadow: 0 0 30px rgba(139, 92, 246, 0.4);
         }
@@ -254,12 +258,14 @@
             .header h1 {
                 font-size: 2.5rem;
             }
+
             .cards-container {
                 flex-direction: column;
             }
         }
     </style>
 </head>
+
 <body>
 
     <div class="header">
@@ -269,13 +275,15 @@
 
     <div class="cards-container">
         <!-- Card 1: Fintjam v1 -->
-        <a href="fintjam-v1/@web/login.html" class="card card-v1">
+        <a href="fintjam-v1/web/login.html" class="card card-v1">
             <div class="card-icon">v1</div>
             <h2>Fintjam v1</h2>
-            <p>The original Midnight Cyber Finance experience. Solid foundation for tracking your daily expenses and income.</p>
+            <p>The original Midnight Cyber Finance experience. Solid foundation for tracking your daily expenses and
+                income.</p>
             <div class="card-btn">
                 Launch Application
-                <svg class="arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                     <polyline points="12 5 19 12 12 19"></polyline>
                 </svg>
@@ -283,13 +291,15 @@
         </a>
 
         <!-- Card 2: Fintjam v2 -->
-        <a href="fintjam-v2/@web/login.html" class="card card-v2">
+        <a href="fintjam-v2/web/login.html" class="card card-v2">
             <div class="card-icon">v2</div>
             <h2>Fintjam v2</h2>
-            <p>Next-generation financial analytics with advanced dashboard metrics, predictive spending, and dynamic bento layouts.</p>
+            <p>Next-generation financial analytics with advanced dashboard metrics, predictive spending, and dynamic
+                bento layouts.</p>
             <div class="card-btn">
                 Launch Application
-                <svg class="arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                     <polyline points="12 5 19 12 12 19"></polyline>
                 </svg>
@@ -298,4 +308,5 @@
     </div>
 
 </body>
+
 </html>
