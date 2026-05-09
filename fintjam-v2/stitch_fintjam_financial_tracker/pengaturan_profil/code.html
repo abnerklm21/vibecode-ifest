@@ -1,0 +1,174 @@
+<!DOCTYPE html><html class="dark" lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Pengaturan - FINTJAM</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;700;800&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#4e4356",
+                        "surface-container-low": "#241729",
+                        "inverse-on-surface": "#3a2b3f",
+                        "on-error": "#690005",
+                        "inverse-primary": "#8c00e5",
+                        "on-tertiary-fixed": "#410008",
+                        "error-container": "#93000a",
+                        "on-surface": "#f2dbf5",
+                        "tertiary": "#ffb3b2",
+                        "primary-fixed": "#f1daff",
+                        "surface-tint": "#dfb7ff",
+                        "error": "#ffb4ab",
+                        "on-primary": "#4b007e",
+                        "primary-container": "#9d00ff",
+                        "inverse-surface": "#f2dbf5",
+                        "outline": "#9a8ca2",
+                        "on-primary-fixed-variant": "#6b00b0",
+                        "on-secondary": "#3e274c",
+                        "surface-container-lowest": "#16091b",
+                        "surface-container-highest": "#3e2f43",
+                        "surface-dim": "#1b0e20",
+                        "on-background": "#f2dbf5",
+                        "primary": "#dfb7ff",
+                        "secondary-fixed-dim": "#dabcea",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-container": "#c8aad8",
+                        "on-secondary-fixed": "#271236",
+                        "tertiary-fixed": "#ffdad8",
+                        "tertiary-fixed-dim": "#ffb3b2",
+                        "on-tertiary-fixed-variant": "#92001e",
+                        "primary-fixed-dim": "#dfb7ff",
+                        "surface-variant": "#3e2f43",
+                        "on-surface-variant": "#d1c1d9",
+                        "surface": "#1b0e20",
+                        "secondary-container": "#553d64",
+                        "secondary-fixed": "#f4daff",
+                        "on-secondary-fixed-variant": "#553d64",
+                        "background": "#1b0e20",
+                        "secondary": "#dabcea",
+                        "on-tertiary-container": "#ffe5e4",
+                        "on-primary-container": "#f7e5ff",
+                        "surface-container-high": "#332538",
+                        "tertiary-container": "#d50030",
+                        "surface-bright": "#433448",
+                        "on-tertiary": "#680012",
+                        "surface-container": "#281b2d",
+                        "on-primary-fixed": "#2d004f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "0px"
+                    },
+                    "spacing": {
+                        "container-margin": "24px",
+                        "gutter": "16px",
+                        "stack-md": "16px",
+                        "stack-sm": "8px",
+                        "stack-lg": "32px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["JetBrains Mono"],
+                        "body-main": ["Hanken Grotesk"],
+                        "display-lg": ["Hanken Grotesk"],
+                        "currency-display": ["JetBrains Mono"],
+                        "headline-md": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "500" }],
+                        "body-main": ["16px", { "lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "currency-display": ["20px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glow-primary {
+            box-shadow: 0 0 15px rgba(157, 0, 255, 0.5);
+        }
+        .glow-primary-hover:hover {
+            box-shadow: 0 0 15px rgba(157, 0, 255, 0.5);
+        }
+        .bg-glass {
+            background-color: rgba(18, 0, 33, 0.6);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-main min-h-screen flex flex-col pt-16">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-background/80 dark:bg-background/80 backdrop-blur-xl border-b border-primary/20 flex justify-between items-center h-16 px-container-margin w-full max-w-full" style="box-shadow: 0 0 15px rgba(223, 183, 255, 0.2);">
+<div class="flex items-center gap-stack-sm text-primary dark:text-primary hover:text-primary transition-all duration-300 cursor-pointer">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<div class="font-display-lg text-headline-md tracking-tighter text-primary dark:text-primary uppercase font-headline-md">
+            FINTJAM
+        </div>
+<div class="flex items-center gap-stack-sm text-primary dark:text-primary border-b-2 border-primary glow-primary h-full">
+<span class="material-symbols-outlined">settings</span>
+</div>
+</header>
+<main class="flex-1 flex flex-col gap-stack-lg p-container-margin max-w-3xl mx-auto w-full">
+<div class="font-headline-md text-headline-md text-primary mt-stack-md">
+            Pengaturan Akun
+        </div>
+<section class="bg-glass border border-primary/20 p-container-margin flex flex-col gap-stack-md relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent"></div>
+<div class="flex flex-col gap-stack-sm">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Nama Pengguna</label>
+<div class="relative w-full">
+<input class="w-full bg-transparent border-0 border-b-2 border-surface-container-highest text-on-background font-body-main text-body-main focus:ring-0 focus:border-primary focus:glow-primary transition-all duration-300 py-2 pl-0" placeholder="kakjamalganteng22" type="text" value="CyberJammer99">
+</div>
+</div>
+<div class="flex flex-col gap-stack-sm mt-stack-sm">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Kata Sandi</label>
+<div class="relative w-full">
+<input class="w-full bg-transparent border-0 border-b-2 border-surface-container-highest text-on-background font-body-main text-body-main focus:ring-0 focus:border-primary focus:glow-primary transition-all duration-300 py-2 pl-0" placeholder="Masukkan kata sandi baru" type="password" value="********">
+</div>
+</div>
+<button class="bg-primary-container text-white font-label-caps text-label-caps py-3 px-6 mt-stack-md glow-primary hover:bg-primary-container/90 transition-colors uppercase tracking-widest self-end">
+                Simpan Profil
+            </button>
+</section>
+<div class="font-headline-md text-headline-md text-primary mt-stack-lg">
+            Batas Keuangan
+        </div>
+<section class="bg-glass border border-primary/20 p-container-margin flex flex-col gap-stack-md relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent"></div>
+<div class="flex flex-col gap-stack-sm">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Batas Pengeluaran Bulanan</label>
+<div class="relative w-full flex items-center">
+<span class="font-currency-display text-currency-display text-primary mr-2">Rp</span>
+<input class="w-full bg-transparent border-0 border-b-2 border-surface-container-highest text-on-background font-currency-display text-currency-display focus:ring-0 focus:border-primary focus:glow-primary transition-all duration-300 py-2 pl-0" placeholder="0" type="text" value="5.000.000">
+</div>
+<p class="font-label-caps text-label-caps text-on-surface-variant mt-1">Sistem akan memberi peringatan jika pengeluaran mendekati batas ini.</p>
+</div>
+<button class="bg-transparent border border-primary text-primary font-label-caps text-label-caps py-3 px-6 mt-stack-md glow-primary-hover transition-all uppercase tracking-widest self-end">
+                Perbarui Batas
+            </button>
+</section>
+<section class="mt-stack-lg flex justify-center">
+<button class="bg-error-container/20 border border-error text-error font-label-caps text-label-caps py-3 px-6 hover:bg-error-container/40 transition-colors uppercase tracking-widest w-full md:w-auto">
+                Keluar
+            </button>
+</section>
+</main>
+
+
+</body></html>
