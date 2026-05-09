@@ -1,7 +1,11 @@
-# vibecode-ifest
+# Disclamer
+Project ini full mengunakan AI dan tanpa coding langsung jadi saya hanya memberi prompt
+
+
+### vibecode-ifest
 Vibe Code by iFest
 
-# Fintjam - Financial Management App
+## Fintjam - Financial Management App
 
 Project ini dikembangkan untuk memenuhi tugas Workshop Informatika.
 
