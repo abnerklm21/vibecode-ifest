@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Login dan daftar akun FINTJAM — Sistem Manajemen Finansial">
+  <title>Masuk — FINTJAM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100dvh;
+      padding: var(--sp-container);
+      position: relative;
+      overflow: hidden;
+    }
+    .auth-card {
+      width: 100%;
+      max-width: 420px;
+      padding: var(--sp-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-lg);
+      position: relative;
+      z-index: 10;
+    }
+    .brand-logo {
+      font-family: var(--font-sans);
+      font-size: 48px;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: var(--clr-primary);
+      text-shadow: 0 0 30px rgba(223,183,255,0.3);
+    }
+    .tab-nav {
+      display: flex;
+      border-bottom: 1px solid rgba(78,67,86,0.5);
+    }
+    .tab-btn {
+      flex: 1;
+      padding-bottom: var(--sp-unit);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--clr-on-surface-variant);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-bottom: -1px;
+    }
+    .tab-btn.active { color: var(--clr-primary); border-bottom-color: var(--clr-primary-container); }
+    .tab-btn:hover:not(.active) { color: var(--clr-primary); }
+
+    .form-panel { display: none; flex-direction: column; gap: var(--sp-md); }
+    .form-panel.active { display: flex; }
+
+    .pw-wrapper { position: relative; }
+    .pw-toggle {
+      position: absolute;
+      right: 0; top: 50%; transform: translateY(-50%);
+      color: var(--clr-outline);
+      background: none; border: none; cursor: pointer;
+      transition: color 0.2s;
+    }
+    .pw-toggle:hover { color: var(--clr-primary); }
+    .pw-wrapper .input-ghost { padding-right: 32px; }
+
+    .auth-footer {
+      padding-top: var(--sp-md);
+      border-top: 1px solid rgba(78,67,86,0.3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Ambient bg glow -->
+<div style="position:absolute;inset:0;pointer-events:none;z-index:0">
+  <div class="ambient-glow"
+       style="width:600px;height:600px;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(157,0,255,0.08)">
+  </div>
+</div>
+
+<!-- Auth Card -->
+<main class="auth-card glass-card" id="auth-card">
+
+  <!-- Brand -->
+  <header style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:var(--sp-sm)">
+    <h1 class="brand-logo">FINTJAM</h1>
+    <p class="text-label clr-muted">Sistem Manajemen Finansial</p>
+  </header>
+
+  <!-- Tabs -->
+  <nav class="tab-nav">
+    <button class="tab-btn active" id="tab-login" data-tab="login">MASUK</button>
+    <button class="tab-btn" id="tab-register" data-tab="register">DAFTAR</button>
+  </nav>
+
+  <!-- ── LOGIN FORM ── -->
+  <form class="form-panel active" id="form-login" novalidate autocomplete="off">
+
+    <div class="form-field">
+      <div class="input-group">
+        <span class="input-icon material-symbols-outlined" style="font-size:20px">person</span>
+        <input class="input-ghost" id="login-username" type="text"
+               placeholder="Nama Pengguna" autocomplete="username">
+      </div>
+      <span class="field-error" id="login-username-error" style="display:none"></span>
+    </div>
+
+    <div class="form-field">
+      <div class="pw-wrapper input-group">
+        <span class="input-icon material-symbols-outlined" style="font-size:20px">key</span>
+        <input class="input-ghost" id="login-password" type="password"
+               placeholder="Kata Sandi" autocomplete="current-password">
+        <button class="pw-toggle" type="button" data-target="login-password" aria-label="Tampilkan kata sandi">
+          <span class="material-symbols-outlined" style="font-size:20px">visibility_off</span>
+        </button>
+      </div>
+      <span class="field-error" id="login-password-error" style="display:none"></span>
+    </div>
+
+    <p class="field-error" id="login-error" style="display:none;margin-top:4px"></p>
+
+    <button class="btn-primary" type="submit" id="btn-login" style="margin-top:8px">
+      OTORISASI AKSES
+      <span class="material-symbols-outlined" style="font-size:18px">arrow_forward</span>
+    </button>
+  </form>
+
+  <!-- ── REGISTER FORM ── -->
+  <form class="form-panel" id="form-register" novalidate autocomplete="off">
+
+    <div class="form-field">
+      <label class="form-label" for="reg-username">Nama Pengguna</label>
+      <div class="input-group">
+        <span class="input-icon material-symbols-outlined" style="font-size:20px">person</span>
+        <input class="input-ghost" id="reg-username" type="text"
+               placeholder="min. 3 karakter" autocomplete="username">
+      </div>
+      <span class="field-error" id="reg-username-error" style="display:none"></span>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label" for="reg-password">Kata Sandi</label>
+      <div class="pw-wrapper input-group">
+        <span class="input-icon material-symbols-outlined" style="font-size:20px">key</span>
+        <input class="input-ghost" id="reg-password" type="password"
+               placeholder="min. 6 karakter" autocomplete="new-password">
+        <button class="pw-toggle" type="button" data-target="reg-password" aria-label="Tampilkan kata sandi">
+          <span class="material-symbols-outlined" style="font-size:20px">visibility_off</span>
+        </button>
+      </div>
+      <span class="field-error" id="reg-password-error" style="display:none"></span>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label" for="reg-confirm">Konfirmasi Kata Sandi</label>
+      <div class="pw-wrapper input-group">
+        <span class="input-icon material-symbols-outlined" style="font-size:20px">lock</span>
+        <input class="input-ghost" id="reg-confirm" type="password"
+               placeholder="ulangi kata sandi" autocomplete="new-password">
+        <button class="pw-toggle" type="button" data-target="reg-confirm" aria-label="Tampilkan kata sandi">
+          <span class="material-symbols-outlined" style="font-size:20px">visibility_off</span>
+        </button>
+      </div>
+      <span class="field-error" id="reg-confirm-error" style="display:none"></span>
+    </div>
+
+    <p class="field-error" id="reg-error" style="display:none;margin-top:4px"></p>
+
+    <button class="btn-primary" type="submit" id="btn-register" style="margin-top:8px">
+      BUAT AKUN
+      <span class="material-symbols-outlined" style="font-size:18px">how_to_reg</span>
+    </button>
+  </form>
+
+  <!-- Footer -->
+  <footer class="auth-footer">
+    <div style="display:flex;align-items:center;gap:8px">
+      <span class="status-dot"></span>
+      <span class="text-label-sm clr-muted" style="opacity:0.7">Sistem Online</span>
+    </div>
+    <span class="text-label-sm clr-muted" style="opacity:0.5">V 2.0.0</span>
+  </footer>
+</main>
+
+<!-- ── SCRIPTS ── -->
+<script src="js/utils.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/auth.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const { validateUsername, validatePassword, setError, clearErrors, showToast } = Utils;
+
+  // ── Tab switching ──────────────────────────────────────────
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.form-panel').forEach(f => f.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('form-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // ── Password toggle ────────────────────────────────────────
+  document.querySelectorAll('.pw-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const input = document.getElementById(btn.dataset.target);
+      const icon  = btn.querySelector('.material-symbols-outlined');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.textContent = 'visibility';
+      } else {
+        input.type = 'password';
+        icon.textContent = 'visibility_off';
+      }
+    });
+  });
+
+  // ── LOGIN ──────────────────────────────────────────────────
+  document.getElementById('form-login').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearErrors('login-username', 'login-password');
+    const errEl = document.getElementById('login-error');
+    errEl.style.display = 'none';
+
+    const username = document.getElementById('login-username').value.trim();
+    const password = document.getElementById('login-password').value;
+
+    if (!username) { setError('login-username', 'Username wajib diisi'); return; }
+    if (!password)  { setError('login-password', 'Password wajib diisi'); return; }
+
+    const btn = document.getElementById('btn-login');
+    btn.disabled = true;
+    btn.textContent = 'MEMVERIFIKASI...';
+
+    const result = await Auth.login(username, password);
+    btn.disabled = false;
+    btn.innerHTML = 'OTORISASI AKSES <span class="material-symbols-outlined" style="font-size:18px">arrow_forward</span>';
+
+    if (!result.ok) {
+      errEl.textContent = result.error;
+      errEl.style.display = 'block';
+      return;
+    }
+
+    // Redirect sesuai status
+    const user = result.user;
+    window.location.replace(user.isLimitSet ? 'index.html' : 'onboarding.html');
+  });
+
+  // ── REGISTER ───────────────────────────────────────────────
+  document.getElementById('form-register').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearErrors('reg-username', 'reg-password', 'reg-confirm');
+    const errEl = document.getElementById('reg-error');
+    errEl.style.display = 'none';
+
+    const username = document.getElementById('reg-username').value.trim();
+    const password = document.getElementById('reg-password').value;
+    const confirm  = document.getElementById('reg-confirm').value;
+
+    let hasError = false;
+    const uErr = validateUsername(username);
+    if (uErr) { setError('reg-username', uErr); hasError = true; }
+
+    const pErr = validatePassword(password);
+    if (pErr) { setError('reg-password', pErr); hasError = true; }
+
+    if (password !== confirm) { setError('reg-confirm', 'Konfirmasi password tidak cocok'); hasError = true; }
+    if (hasError) return;
+
+    const btn = document.getElementById('btn-register');
+    btn.disabled = true;
+    btn.textContent = 'MEMBUAT AKUN...';
+
+    const result = await Auth.register(username, password);
+    btn.disabled = false;
+    btn.innerHTML = 'BUAT AKUN <span class="material-symbols-outlined" style="font-size:18px">how_to_reg</span>';
+
+    if (!result.ok) {
+      errEl.textContent = result.error;
+      errEl.style.display = 'block';
+      return;
+    }
+
+    window.location.replace('onboarding.html');
+  });
+
+  // Clear error on input
+  document.querySelectorAll('.input-ghost').forEach(input => {
+    input.addEventListener('input', () => {
+      input.classList.remove('error-state');
+      const errEl = document.getElementById(input.id + '-error');
+      if (errEl) { errEl.textContent = ''; errEl.style.display = 'none'; }
+    });
+  });
+});
+</script>
+</body>
+</html>

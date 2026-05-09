@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Pengaturan akun FINTJAM — ubah username, password, dan limit">
+  <title>Pengaturan — FINTJAM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    .settings-section {
+      background: rgba(18,0,33,0.6);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 1px solid rgba(157,0,255,0.2);
+      padding: var(--sp-container);
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-md);
+      position: relative;
+      overflow: hidden;
+    }
+    .settings-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 2px;
+      background: linear-gradient(90deg, transparent, #9d00ff, transparent);
+    }
+    .pw-field { position: relative; }
+    .pw-field .pw-toggle {
+      position: absolute;
+      right: 0; top: 50%; transform: translateY(-50%);
+      color: var(--clr-outline); background: none; border: none; cursor: pointer;
+      transition: color 0.2s;
+    }
+    .pw-field .pw-toggle:hover { color: var(--clr-primary); }
+  </style>
+</head>
+<body class="page-shell">
+
+<!-- TOP APP BAR -->
+<header class="top-app-bar">
+  <a href="index.html" style="color:var(--clr-primary);display:flex;align-items:center;gap:6px;transition:opacity 0.2s">
+    <span class="material-symbols-outlined">arrow_back</span>
+  </a>
+  <span class="brand-name">FINTJAM</span>
+  <div style="display:flex;align-items:center;color:var(--clr-primary);border-bottom:2px solid var(--clr-primary-container);padding-bottom:2px">
+    <span class="material-symbols-outlined">settings</span>
+  </div>
+</header>
+
+<main class="content-area" style="max-width:768px">
+
+  <h1 class="text-headline-md clr-primary" style="margin-bottom:var(--sp-lg)">Pengaturan Akun</h1>
+
+  <!-- ── PROFIL SECTION ── -->
+  <section class="settings-section" style="margin-bottom:var(--sp-lg)">
+    <h2 class="text-label" style="color:var(--clr-on-surface-variant);margin-bottom:8px">PENGATURAN PROFIL</h2>
+
+    <div class="form-field">
+      <label class="form-label" for="set-username">Nama Pengguna</label>
+      <input class="input-ghost" id="set-username" type="text" placeholder="Username baru" autocomplete="username">
+      <span class="field-error" id="set-username-error" style="display:none"></span>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label" for="set-password">Kata Sandi Baru</label>
+      <div class="pw-field">
+        <input class="input-ghost" id="set-password" type="password"
+               placeholder="Kosongkan jika tidak diubah" autocomplete="new-password"
+               style="padding-right:32px">
+        <button class="pw-toggle" type="button" data-target="set-password" aria-label="Tampilkan">
+          <span class="material-symbols-outlined" style="font-size:20px">visibility_off</span>
+        </button>
+      </div>
+      <span class="field-error" id="set-password-error" style="display:none"></span>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label" for="set-confirm-pw">Konfirmasi Kata Sandi</label>
+      <div class="pw-field">
+        <input class="input-ghost" id="set-confirm-pw" type="password"
+               placeholder="Ulangi kata sandi baru" autocomplete="new-password"
+               style="padding-right:32px">
+        <button class="pw-toggle" type="button" data-target="set-confirm-pw" aria-label="Tampilkan">
+          <span class="material-symbols-outlined" style="font-size:20px">visibility_off</span>
+        </button>
+      </div>
+      <span class="field-error" id="set-confirm-pw-error" style="display:none"></span>
+    </div>
+
+    <div style="display:flex;justify-content:flex-end;margin-top:8px">
+      <button class="btn-primary" id="btn-save-profile" style="width:auto;padding:12px 28px">
+        SIMPAN PROFIL
+      </button>
+    </div>
+  </section>
+
+  <!-- ── LIMIT SECTION ── -->
+  <section class="settings-section" style="margin-bottom:var(--sp-lg)">
+    <h2 class="text-label" style="color:var(--clr-on-surface-variant);margin-bottom:8px">BATAS KEUANGAN</h2>
+
+    <div class="form-field">
+      <label class="form-label" for="set-limit">Batas Pengeluaran Bulanan</label>
+      <div style="display:flex;align-items:flex-end;gap:8px">
+        <span class="text-currency clr-primary" style="padding-bottom:8px">Rp</span>
+        <input class="input-ghost" id="set-limit" type="text" inputmode="numeric"
+               placeholder="0" autocomplete="off" style="flex:1">
+      </div>
+      <span class="field-error" id="set-limit-error" style="display:none"></span>
+      <p class="text-label-sm clr-muted" style="margin-top:6px;text-transform:none;letter-spacing:0">
+        Sistem akan memberi peringatan jika pengeluaran mendekati batas ini.
+      </p>
+    </div>
+
+    <div style="display:flex;justify-content:flex-end;margin-top:8px">
+      <button class="btn-outline" id="btn-save-limit" style="padding:12px 28px">
+        PERBARUI BATAS
+      </button>
+    </div>
+  </section>
+
+  <!-- ── LOGOUT ── -->
+  <section style="display:flex;justify-content:center">
+    <button class="btn-danger" id="btn-logout" style="width:100%;max-width:320px;padding:14px">
+      <span class="material-symbols-outlined" style="font-size:18px">logout</span>
+      KELUAR
+    </button>
+  </section>
+
+</main>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav no-print">
+  <a href="index.html">
+    <span class="material-symbols-outlined">grid_view</span>DASHBOARD
+  </a>
+  <a href="transactions.html">
+    <span class="material-symbols-outlined">receipt_long</span>HISTORY
+  </a>
+  <a href="settings.html" class="active">
+    <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">settings</span>PENGATURAN
+  </a>
+</nav>
+
+<div id="toast-container" class="toast-container"></div>
+
+<script src="js/utils.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/settings.js"></script>
+<script>
+// Password toggle
+document.querySelectorAll('.pw-toggle').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const input = document.getElementById(btn.dataset.target);
+    const icon  = btn.querySelector('.material-symbols-outlined');
+    input.type  = input.type === 'password' ? 'text' : 'password';
+    icon.textContent = input.type === 'password' ? 'visibility_off' : 'visibility';
+  });
+});
+// Clear errors on input
+document.querySelectorAll('.input-ghost').forEach(input => {
+  input.addEventListener('input', () => {
+    input.classList.remove('error-state');
+    const err = document.getElementById(input.id + '-error');
+    if (err) { err.textContent = ''; err.style.display = 'none'; }
+  });
+});
+</script>
+</body>
+</html>

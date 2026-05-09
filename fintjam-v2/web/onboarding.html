@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Atur limit pengeluaran bulanan pertama Anda di FINTJAM">
+  <title>Inisialisasi — FINTJAM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100dvh;
+      padding: var(--sp-container);
+      position: relative;
+      overflow: hidden;
+    }
+    .onboard-card {
+      width: 100%;
+      max-width: 448px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-lg);
+      position: relative;
+      z-index: 10;
+    }
+    .amount-row {
+      display: flex;
+      align-items: flex-end;
+      gap: var(--sp-sm);
+      border-bottom: 2px solid var(--clr-outline-variant);
+      padding-bottom: 8px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .amount-row:focus-within {
+      border-bottom-color: var(--clr-primary-container);
+      box-shadow: 0 4px 15px rgba(157,0,255,0.3);
+    }
+    .amount-rp {
+      font-family: var(--font-mono);
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--clr-primary);
+      padding-bottom: 2px;
+      flex-shrink: 0;
+    }
+    .amount-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-family: var(--font-mono);
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--clr-on-surface);
+      width: 100%;
+      min-width: 0;
+    }
+    .amount-input::placeholder { color: rgba(154,140,162,0.4); }
+    @media (min-width: 768px) { .amount-input { font-size: 48px; } }
+  </style>
+</head>
+<body>
+
+<!-- Ambient + grid overlay -->
+<div style="position:absolute;inset:0;pointer-events:none;z-index:0;background:linear-gradient(135deg,#120021 0%,#1b0e20 50%,#000 100%)"></div>
+<div class="grid-overlay" style="position:absolute;inset:0;pointer-events:none;z-index:0;opacity:0.08"></div>
+
+<main class="onboard-card glass-card" id="onboard-card">
+
+  <!-- Header -->
+  <header style="display:flex;flex-direction:column;gap:var(--sp-sm)">
+    <h1 class="text-display-lg clr-primary" style="font-size:36px">FINTJAM</h1>
+    <div style="display:flex;align-items:center;gap:8px;color:var(--clr-primary)">
+      <span class="material-symbols-outlined" style="font-size:18px">account_balance_wallet</span>
+      <span class="text-label">Inisialisasi Sistem</span>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <section style="display:flex;flex-direction:column;gap:var(--sp-md)">
+    <div>
+      <h2 class="text-headline-md" style="color:var(--clr-on-surface);margin-bottom:8px">Limit Pengeluaran</h2>
+      <p class="text-body clr-muted">
+        Tentukan batas pengeluaran bulanan Anda. Parameter ini digunakan untuk mengkalibrasi peringatan sistem.
+      </p>
+    </div>
+
+    <div style="margin-top:var(--sp-md)">
+      <label class="form-label" for="monthly-limit" style="display:block;margin-bottom:8px;color:var(--clr-outline)">
+        ALOKASI MAKSIMUM
+      </label>
+      <div class="amount-row">
+        <span class="amount-rp">Rp</span>
+        <input class="amount-input" id="monthly-limit" type="text"
+               inputmode="numeric" placeholder="0" autocomplete="off">
+      </div>
+      <span class="field-error" id="limit-error" style="display:none;margin-top:6px"></span>
+    </div>
+  </section>
+
+  <!-- Actions -->
+  <div style="display:flex;flex-direction:column;gap:var(--sp-sm);padding-top:var(--sp-md);border-top:1px solid rgba(78,67,86,0.3)">
+    <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:var(--sp-md)">
+      <span class="material-symbols-outlined clr-muted" style="font-size:18px;flex-shrink:0;margin-top:2px">info</span>
+      <p class="text-label clr-muted" style="text-transform:none;letter-spacing:0;font-size:11px;line-height:1.5">
+        Limit dapat disesuaikan kembali melalui modul pengaturan setelah inisialisasi selesai.
+      </p>
+    </div>
+
+    <button class="btn-primary" id="btn-start">
+      MULAI PEMANTAUAN
+      <span class="material-symbols-outlined" id="btn-arrow" style="font-size:16px;transition:transform 0.2s">arrow_forward</span>
+    </button>
+  </div>
+</main>
+
+<div id="toast-container" class="toast-container"></div>
+
+<script src="js/utils.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/auth.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const input  = document.getElementById('monthly-limit');
+  const errEl  = document.getElementById('limit-error');
+  const btnEl  = document.getElementById('btn-start');
+  const arrow  = document.getElementById('btn-arrow');
+
+  // Format input on type
+  input.addEventListener('input', Utils.handleCurrencyInput);
+
+  // Hover effect on arrow
+  btnEl.addEventListener('mouseenter', () => arrow.style.transform = 'translateX(4px)');
+  btnEl.addEventListener('mouseleave', () => arrow.style.transform = '');
+
+  btnEl.addEventListener('click', async () => {
+    errEl.style.display = 'none';
+    const raw   = Utils.parseRupiah(input.value);
+
+    if (!raw || raw <= 0) {
+      errEl.textContent = 'Masukkan limit pengeluaran yang valid (lebih dari 0)';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    const session = Storage.getSession();
+    if (!session) { window.location.replace('login.html'); return; }
+
+    Storage.updateUser(session.userId, { monthlyLimit: raw, isLimitSet: true });
+    window.location.replace('index.html');
+  });
+});
+</script>
+</body>
+</html>

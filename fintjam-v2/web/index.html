@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Dashboard FINTJAM — pantau keuangan Anda secara real-time">
+  <title>Dashboard — FINTJAM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    .stat-card { display:flex;flex-direction:column;justify-content:space-between;padding:var(--sp-lg);min-height:140px; }
+    .active-type-btn.expense-mode {
+      border-color: var(--clr-expense) !important;
+      color: var(--clr-expense) !important;
+      background: rgba(255,180,171,0.1) !important;
+      box-shadow: 0 0 12px rgba(255,0,60,0.3);
+    }
+    .active-type-btn.income-mode {
+      border-color: var(--clr-income) !important;
+      color: var(--clr-income) !important;
+      background: rgba(223,183,255,0.1) !important;
+      box-shadow: 0 0 12px rgba(157,0,255,0.3);
+    }
+    .glow-decor {
+      position:absolute;right:-60px;top:-60px;width:200px;height:200px;
+      background:rgba(157,0,255,0.12);
+      border-radius:50% !important;
+      filter:blur(60px);
+      pointer-events:none;
+    }
+  </style>
+</head>
+<body class="page-shell">
+
+<!-- TOP APP BAR -->
+<header class="top-app-bar">
+  <div class="brand">
+    <span class="material-symbols-outlined" style="font-size:22px">account_balance_wallet</span>
+    <span class="brand-name">FINTJAM</span>
+  </div>
+  <nav class="top-nav">
+    <a href="index.html" class="active">
+      <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;font-size:18px">grid_view</span>
+      DASHBOARD
+    </a>
+    <a href="transactions.html">
+      <span class="material-symbols-outlined" style="font-size:18px">receipt_long</span>
+      HISTORY
+    </a>
+    <a href="settings.html">
+      <span class="material-symbols-outlined" style="font-size:18px">settings</span>
+      PENGATURAN
+    </a>
+  </nav>
+  <a href="settings.html" style="color:var(--clr-primary);transition:opacity 0.2s" class="no-print">
+    <span class="material-symbols-outlined">settings</span>
+  </a>
+</header>
+
+<!-- MAIN CONTENT -->
+<main class="content-area">
+  <div class="bento-grid">
+
+    <!-- ── TOTAL SALDO (col-8 desktop) ── -->
+    <div class="glass-card stat-card col-8" style="position:relative;overflow:hidden">
+      <div class="glow-decor"></div>
+      <div style="position:relative;z-index:1">
+        <h2 class="text-label clr-muted">TOTAL SALDO</h2>
+        <div style="display:flex;align-items:baseline;gap:10px;margin-top:8px">
+          <span class="text-currency clr-primary">Rp</span>
+          <span class="text-display-lg" id="total-saldo">0</span>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;color:var(--clr-primary);position:relative;z-index:1">
+        <span class="material-symbols-outlined" style="font-size:18px">trending_up</span>
+        <span class="text-label">Akumulasi semua transaksi</span>
+      </div>
+    </div>
+
+    <!-- ── QUICK STATS (col-4 desktop) ── -->
+    <div class="col-4" style="display:flex;flex-direction:column;gap:var(--sp-gutter)">
+
+      <!-- Pemasukan -->
+      <div class="glass-card" style="padding:var(--sp-md);flex:1;display:flex;flex-direction:column;justify-content:center">
+        <h3 class="text-label clr-muted" style="margin-bottom:8px">PEMASUKAN (BLN INI)</h3>
+        <div style="display:flex;align-items:baseline;gap:8px">
+          <span class="text-currency clr-primary">Rp</span>
+          <span class="text-headline-md clr-primary" id="income-value">0</span>
+        </div>
+      </div>
+
+      <!-- Pengeluaran -->
+      <div class="glass-card" style="padding:var(--sp-md);flex:1;display:flex;flex-direction:column;justify-content:center;gap:10px;border-color:rgba(255,180,171,0.2)">
+        <h3 class="text-label clr-muted" style="margin-bottom:4px">PENGELUARAN (BLN INI)</h3>
+        <div style="display:flex;align-items:baseline;gap:8px">
+          <span class="text-currency clr-expense">Rp</span>
+          <span class="text-headline-md clr-expense" id="expense-value">0</span>
+        </div>
+        <div>
+          <div class="limit-bar-track">
+            <div class="limit-bar-fill" id="limit-bar" style="width:0%"></div>
+          </div>
+          <p class="text-label-sm clr-muted" id="limit-label" style="margin-top:4px">—</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CHART (col-12 desktop) ── -->
+    <div class="glass-card col-12" style="padding:var(--sp-lg);min-height:280px;display:flex;flex-direction:column">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--sp-lg)">
+        <h2 class="text-headline-md">CASH FLOW ANALYTICS</h2>
+        <div style="display:flex;gap:16px">
+          <span class="text-label-sm" style="display:flex;align-items:center;gap:6px;color:var(--clr-income)">
+            <span style="width:12px;height:12px;background:var(--clr-income);display:inline-block"></span>
+            Pemasukan
+          </span>
+          <span class="text-label-sm" style="display:flex;align-items:center;gap:6px;color:var(--clr-expense)">
+            <span style="width:12px;height:12px;background:var(--clr-expense);display:inline-block"></span>
+            Pengeluaran
+          </span>
+        </div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:8px">
+        <div id="chart-bars"
+             style="flex:1;display:flex;align-items:flex-end;justify-content:space-around;border-left:1px solid rgba(78,67,86,0.5);border-bottom:1px solid rgba(78,67,86,0.5);padding:8px 4px 4px;min-height:180px">
+        </div>
+        <div id="chart-labels" style="display:flex;justify-content:space-around;padding:0 4px"></div>
+      </div>
+    </div>
+
+    <!-- ── TRANSAKSI TERBARU (col-12 desktop) ── -->
+    <div class="glass-card col-12" style="padding:var(--sp-lg)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--sp-md);padding-bottom:var(--sp-sm);border-bottom:1px solid rgba(78,67,86,0.3)">
+        <h2 class="text-headline-md">TRANSAKSI TERBARU</h2>
+        <a href="transactions.html" class="text-label clr-primary" style="transition:opacity 0.2s">Lihat Semua</a>
+      </div>
+      <div id="recent-txns"></div>
+    </div>
+
+  </div>
+</main>
+
+<!-- FAB -->
+<button class="fab no-print" id="fab-add" aria-label="Tambah Transaksi">
+  <span class="material-symbols-outlined" style="font-size:32px">add</span>
+</button>
+
+<!-- BOTTOM NAV (mobile) -->
+<nav class="bottom-nav no-print">
+  <a href="index.html" class="active">
+    <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">grid_view</span>
+    DASHBOARD
+  </a>
+  <a href="transactions.html">
+    <span class="material-symbols-outlined">receipt_long</span>
+    HISTORY
+  </a>
+  <a href="settings.html">
+    <span class="material-symbols-outlined">settings</span>
+    PENGATURAN
+  </a>
+</nav>
+
+<!-- ════════ MODAL TRANSAKSI ════════ -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal" id="modal-txn" role="dialog" aria-modal="true" aria-label="Input Transaksi Baru">
+
+    <!-- Header -->
+    <div class="modal-header">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="material-symbols-outlined clr-primary" style="font-size:28px;font-variation-settings:'FILL' 1">add_box</span>
+        <h2 class="text-headline-md" style="text-transform:uppercase;letter-spacing:0.05em">Input Transaksi Baru</h2>
+      </div>
+      <button class="btn-icon clr-muted" id="btn-modal-close" aria-label="Tutup modal">
+        <span class="material-symbols-outlined" style="font-size:28px">close</span>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="modal-body">
+
+      <!-- Type Toggle -->
+      <div style="display:flex;gap:var(--sp-md)">
+        <button id="type-expense" class="btn-outline active-type-btn expense-mode" style="flex:1;padding:12px"
+                style="border-color:var(--clr-expense)">
+          <span class="material-symbols-outlined" style="font-size:18px">arrow_downward</span>
+          PENGELUARAN
+        </button>
+        <button id="type-income" class="btn-outline" style="flex:1;padding:12px">
+          <span class="material-symbols-outlined" style="font-size:18px">arrow_upward</span>
+          PEMASUKAN
+        </button>
+      </div>
+
+      <!-- Amount -->
+      <div class="form-field">
+        <label class="form-label" for="modal-amount">JUMLAH (IDR)</label>
+        <div style="display:flex;align-items:flex-end;border-bottom:2px solid var(--clr-outline-variant);padding-bottom:8px">
+          <span class="text-currency clr-primary" style="margin-right:8px;padding-bottom:2px">Rp</span>
+          <input class="input-ghost" id="modal-amount" type="text" inputmode="numeric"
+                 placeholder="0" autocomplete="off"
+                 style="font-size:36px;font-weight:700;font-family:var(--font-mono);border:none;padding:0">
+        </div>
+      </div>
+
+      <!-- Categories -->
+      <div class="form-field">
+        <label class="form-label">KATEGORI</label>
+        <div class="category-grid" id="cat-grid"></div>
+      </div>
+
+      <!-- Date & Note -->
+      <div style="display:grid;grid-template-columns:1fr;gap:var(--sp-md)">
+        <div class="form-field">
+          <label class="form-label" for="modal-date">TANGGAL</label>
+          <div style="display:flex;align-items:center;gap:8px;border-bottom:2px solid var(--clr-outline-variant);padding-bottom:8px;transition:border-color 0.3s">
+            <span class="material-symbols-outlined clr-muted" style="font-size:18px;flex-shrink:0">calendar_today</span>
+            <input id="modal-date" type="date"
+                   style="background:transparent;border:none;outline:none;color:var(--clr-on-surface);font-family:var(--font-sans);font-size:16px;width:100%;cursor:pointer">
+          </div>
+        </div>
+        <div class="form-field">
+          <label class="form-label" for="modal-note">CATATAN (OPSIONAL)</label>
+          <div style="display:flex;align-items:center;gap:8px;border-bottom:2px solid var(--clr-outline-variant);padding-bottom:8px">
+            <span class="material-symbols-outlined clr-muted" style="font-size:18px;flex-shrink:0">edit_note</span>
+            <input class="input-ghost" id="modal-note" type="text"
+                   placeholder="Catatan singkat..." autocomplete="off"
+                   style="border:none;padding:0">
+          </div>
+        </div>
+      </div>
+
+      <p class="field-error" id="modal-error" style="display:none"></p>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer">
+      <button class="btn-outline no-print" id="btn-print-from-modal"
+              style="display:flex;align-items:center;gap:8px;padding:10px 16px"
+              onclick="window.location.href='transactions.html'">
+        <span class="material-symbols-outlined" style="font-size:18px">print</span>
+        Cetak Laporan
+      </button>
+      <div style="display:flex;gap:var(--sp-sm);flex:1;justify-content:flex-end">
+        <button class="btn-outline" id="btn-modal-cancel" style="padding:10px 20px">BATAL</button>
+        <button class="btn-primary" id="btn-modal-save"
+                style="padding:10px 24px;font-size:14px;width:auto">SIMPAN DATA</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container" class="toast-container"></div>
+
+<script src="js/utils.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/transactions.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>

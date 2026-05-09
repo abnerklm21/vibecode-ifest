@@ -26,12 +26,17 @@ function formatRupiah(number) {
 }
 
 function generateId() {
-    try {
-        return Date.now().toString(36) + Math.random().toString(36).substr(2);
-    } catch (error) {
-        console.error('Error generating ID:', error);
-        return 'id_error';
-    }
+    return Date.now().toString(36) + Math.random().toString(36).substr(2);
+}
+
+function handleCurrencyInput(e) {
+    const raw = e.target.value.replace(/\D/g, '');
+    const num = parseInt(raw) || 0;
+    e.target.value = num === 0 ? '' : new Intl.NumberFormat('id-ID').format(num);
+}
+
+function parseRupiah(str) {
+    return parseInt(String(str).replace(/\D/g, '')) || 0;
 }
 
 function showToast(message, type = 'warning') {
@@ -288,10 +293,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // Setup
         const setupForm = document.getElementById('setupForm');
         if (setupForm) {
+            const setupLimitInput = document.getElementById('setupLimit');
+            if (setupLimitInput) setupLimitInput.addEventListener('input', handleCurrencyInput);
+
             setupForm.addEventListener('submit', (e) => {
                 try {
                     e.preventDefault();
-                    const limit = parseFloat(document.getElementById('setupLimit').value);
+                    const limit = parseRupiah(document.getElementById('setupLimit').value);
                     
                     if (limit <= 0 || isNaN(limit)) {
                         showToast('Limit must be a valid number greater than 0');
@@ -321,12 +329,16 @@ document.addEventListener('DOMContentLoaded', () => {
         // Settings
         const settingsForm = document.getElementById('settingsForm');
         if (settingsForm) {
+            const setNewLimitInput = document.getElementById('setNewLimit');
+            if (setNewLimitInput) setNewLimitInput.addEventListener('input', handleCurrencyInput);
+
             settingsForm.addEventListener('submit', (e) => {
                 try {
                     e.preventDefault();
                     const newUsername = sanitizeInput(document.getElementById('setNewUsername').value);
                     const newPass = sanitizeInput(document.getElementById('setNewPassword').value);
-                    const newLimit = document.getElementById('setNewLimit').value;
+                    const newLimitRaw = document.getElementById('setNewLimit').value;
+                    const newLimit = parseRupiah(newLimitRaw);
 
                     const users = getUsers();
                     const userIndex = users.findIndex(u => u.id === currentUser.id);
@@ -346,15 +358,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         updated = true;
                     }
 
-                    if (newLimit) {
-                        const parsedLimit = parseFloat(newLimit);
-                        if (!isNaN(parsedLimit) && parsedLimit > 0) {
-                            users[userIndex].monthlyLimit = parsedLimit;
-                            updated = true;
-                        } else {
-                            showToast('Invalid limit value');
-                            return;
-                        }
+                    if (newLimitRaw) {
+                        users[userIndex].monthlyLimit = newLimit;
+                        updated = true;
                     }
 
                     if (updated) {
@@ -382,12 +388,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const txForm = document.getElementById('txForm');
             if (txForm) {
+                const txAmountInput = document.getElementById('txAmount');
+                if (txAmountInput) txAmountInput.addEventListener('input', handleCurrencyInput);
+
                 txForm.addEventListener('submit', (e) => {
                     try {
                         e.preventDefault();
                         const type = sanitizeInput(document.getElementById('txType').value);
                         const category = sanitizeInput(document.getElementById('txCategory').value);
-                        const amount = parseFloat(document.getElementById('txAmount').value);
+                        const amount = parseRupiah(document.getElementById('txAmount').value);
                         const description = sanitizeInput(document.getElementById('txDescription').value);
 
                         if (isNaN(amount) || amount <= 0) {

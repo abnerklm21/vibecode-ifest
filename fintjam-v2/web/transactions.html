@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="History dan laporan transaksi FINTJAM">
+  <title>History — FINTJAM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-sm);
+      align-items: center;
+      padding: var(--sp-md) 0;
+    }
+    .month-select {
+      background: transparent;
+      border: 1px solid var(--clr-outline-variant);
+      color: var(--clr-on-surface);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .month-select:focus { border-color: var(--clr-primary); }
+    .month-select option { background: #281b2d; }
+
+    .group-header {
+      padding: var(--sp-sm) var(--sp-md);
+      background: rgba(40,27,45,0.8);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .txn-delete-btn {
+      background: none;
+      border: none;
+      color: var(--clr-outline);
+      cursor: pointer;
+      padding: 4px;
+      transition: color 0.2s;
+      flex-shrink: 0;
+    }
+    .txn-delete-btn:hover { color: var(--clr-error); }
+
+    @media print {
+      .filter-bar, .fab, .bottom-nav, .top-app-bar, .no-print { display: none !important; }
+      .txn-delete-btn { display: none; }
+      body { background: white !important; color: black !important; padding-top: 0 !important; }
+      .glass-card { background: white !important; border: 1px solid #ddd !important; box-shadow: none !important; }
+      .glass-card::before { display: none; }
+      .clr-income { color: #6200ea !important; }
+      .clr-expense, .clr-error { color: #c62828 !important; }
+      .print-header { display: block !important; }
+    }
+    .print-header { display: none; text-align: center; margin-bottom: 24px; }
+  </style>
+</head>
+<body class="page-shell">
+
+<!-- TOP APP BAR -->
+<header class="top-app-bar">
+  <div class="brand">
+    <span class="material-symbols-outlined" style="font-size:22px">account_balance_wallet</span>
+    <span class="brand-name">FINTJAM</span>
+  </div>
+  <nav class="top-nav">
+    <a href="index.html">
+      <span class="material-symbols-outlined" style="font-size:18px">grid_view</span>DASHBOARD
+    </a>
+    <a href="transactions.html" class="active">
+      <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;font-size:18px">receipt_long</span>HISTORY
+    </a>
+    <a href="settings.html">
+      <span class="material-symbols-outlined" style="font-size:18px">settings</span>PENGATURAN
+    </a>
+  </nav>
+  <a href="settings.html" style="color:var(--clr-primary)" class="no-print">
+    <span class="material-symbols-outlined">settings</span>
+  </a>
+</header>
+
+<main class="content-area">
+
+  <!-- Print header -->
+  <div class="print-header">
+    <h1 style="font-size:24px;font-weight:800">FINTJAM — Laporan Keuangan</h1>
+    <p id="print-period" style="color:#555;margin-top:4px"></p>
+  </div>
+
+  <!-- Summary strip -->
+  <div id="summary-strip" class="glass-card"
+       style="padding:var(--sp-md) var(--sp-lg);display:flex;gap:var(--sp-lg);flex-wrap:wrap;align-items:center;margin-bottom:var(--sp-gutter)">
+    <div>
+      <p class="text-label clr-muted">PEMASUKAN</p>
+      <p class="text-currency clr-income" id="sum-income">Rp 0</p>
+    </div>
+    <div style="width:1px;height:36px;background:rgba(78,67,86,0.5)"></div>
+    <div>
+      <p class="text-label clr-muted">PENGELUARAN</p>
+      <p class="text-currency clr-expense" id="sum-expense">Rp 0</p>
+    </div>
+    <div style="width:1px;height:36px;background:rgba(78,67,86,0.5)"></div>
+    <div>
+      <p class="text-label clr-muted">SELISIH</p>
+      <p class="text-currency" id="sum-diff" style="color:var(--clr-on-bg)">Rp 0</p>
+    </div>
+  </div>
+
+  <!-- Filter Bar -->
+  <div class="filter-bar no-print">
+    <button class="filter-chip active" data-type="all" id="chip-all">SEMUA</button>
+    <button class="filter-chip" data-type="income" id="chip-income">
+      <span class="material-symbols-outlined" style="font-size:14px">arrow_upward</span>PEMASUKAN
+    </button>
+    <button class="filter-chip" data-type="expense" id="chip-expense">
+      <span class="material-symbols-outlined" style="font-size:14px">arrow_downward</span>PENGELUARAN
+    </button>
+
+    <div style="margin-left:auto;display:flex;gap:var(--sp-sm);align-items:center">
+      <select class="month-select" id="filter-month">
+        <option value="">Semua Bulan</option>
+      </select>
+      <select class="month-select" id="filter-year">
+        <option value="">Semua Tahun</option>
+      </select>
+      <button class="btn-outline no-print" id="btn-print"
+              style="display:flex;align-items:center;gap:6px;padding:6px 16px">
+        <span class="material-symbols-outlined" style="font-size:16px">print</span>
+        CETAK
+      </button>
+    </div>
+  </div>
+
+  <!-- Transaction List -->
+  <div id="txn-list" class="glass-card" style="overflow:hidden"></div>
+</main>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav no-print">
+  <a href="index.html">
+    <span class="material-symbols-outlined">grid_view</span>DASHBOARD
+  </a>
+  <a href="transactions.html" class="active">
+    <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">receipt_long</span>HISTORY
+  </a>
+  <a href="settings.html">
+    <span class="material-symbols-outlined">settings</span>PENGATURAN
+  </a>
+</nav>
+
+<div id="toast-container" class="toast-container"></div>
+
+<script src="js/utils.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/transactions.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const user = Auth.getCurrentUser();
+  if (!user) return;
+
+  let filterType  = 'all';
+  let filterMonth = '';
+  let filterYear  = '';
+
+  // ── POPULATE YEAR/MONTH OPTIONS ──────────────────────────────
+  const allTxns = Transactions.getByUser(user.id);
+  const years   = [...new Set(allTxns.map(t => t.date.split('-')[0]))].sort((a,b) => b-a);
+  const yearSel = document.getElementById('filter-year');
+  const monSel  = document.getElementById('filter-month');
+
+  years.forEach(y => {
+    const o = document.createElement('option');
+    o.value = y; o.textContent = y;
+    yearSel.appendChild(o);
+  });
+  Utils.MONTHS_ID.forEach((m, i) => {
+    const o = document.createElement('option');
+    o.value = String(i + 1).padStart(2, '0'); o.textContent = m;
+    monSel.appendChild(o);
+  });
+
+  // Default: current month/year
+  const now = new Date();
+  yearSel.value = String(now.getFullYear());
+  monSel.value  = String(now.getMonth() + 1).padStart(2, '0');
+  filterYear = yearSel.value;
+  filterMonth = monSel.value;
+
+  // ── FILTER CHIPS ─────────────────────────────────────────────
+  document.querySelectorAll('.filter-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      filterType = chip.dataset.type;
+      render();
+    });
+  });
+
+  yearSel.addEventListener('change', () => { filterYear  = yearSel.value;  render(); });
+  monSel.addEventListener('change',  () => { filterMonth = monSel.value;   render(); });
+
+  // ── PRINT ────────────────────────────────────────────────────
+  document.getElementById('btn-print').addEventListener('click', () => {
+    const period = (filterMonth && filterYear)
+      ? `${Utils.MONTHS_ID[parseInt(filterMonth)-1]} ${filterYear}`
+      : filterYear || 'Semua Periode';
+    document.getElementById('print-period').textContent = `Periode: ${period}`;
+    window.print();
+  });
+
+  // ── RENDER ───────────────────────────────────────────────────
+  function render() {
+    let txns = Transactions.getByUser(user.id);
+
+    if (filterType !== 'all') txns = txns.filter(t => t.type === filterType);
+    if (filterYear)  txns = txns.filter(t => t.date.startsWith(filterYear));
+    if (filterMonth) txns = txns.filter(t => t.date.split('-')[1] === filterMonth);
+
+    // Summary
+    const income  = txns.filter(t => t.type === 'income').reduce((s,t) => s+t.amount, 0);
+    const expense = txns.filter(t => t.type === 'expense').reduce((s,t) => s+t.amount, 0);
+    const diff    = income - expense;
+    document.getElementById('sum-income').textContent  = Utils.formatRupiah(income);
+    document.getElementById('sum-expense').textContent = Utils.formatRupiah(expense);
+    const diffEl = document.getElementById('sum-diff');
+    diffEl.textContent = (diff < 0 ? '- ' : '+ ') + Utils.formatRupiah(Math.abs(diff));
+    diffEl.style.color = diff < 0 ? 'var(--clr-expense)' : 'var(--clr-income)';
+
+    // List
+    const container = document.getElementById('txn-list');
+    if (txns.length === 0) {
+      container.innerHTML = `
+        <div style="padding:48px;text-align:center">
+          <span class="material-symbols-outlined clr-muted" style="font-size:48px">receipt_long</span>
+          <p class="text-label clr-muted" style="margin-top:12px">Tidak ada transaksi</p>
+        </div>`;
+      return;
+    }
+
+    const groups = Transactions.groupByMonth(txns);
+    container.innerHTML = groups.map(g => `
+      <div>
+        <div class="group-header">
+          <span class="text-label" style="color:var(--clr-primary)">${g.label}</span>
+          <span class="text-label-sm clr-muted">${g.txns.length} transaksi</span>
+        </div>
+        ${g.txns.map(t => buildRow(t)).join('')}
+      </div>`).join('<div class="divider"></div>');
+
+    // Attach delete listeners
+    container.querySelectorAll('.btn-delete-txn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (!confirm('Hapus transaksi ini?')) return;
+        Transactions.remove(btn.dataset.id);
+        render();
+      });
+    });
+  }
+
+  function buildRow(t) {
+    const cat   = Utils.CATEGORIES[t.category] || { label: t.category, icon: 'payments' };
+    const sign  = t.type === 'income' ? '+' : '-';
+    const color = t.type === 'income' ? 'var(--clr-income)' : 'var(--clr-expense)';
+    return `
+      <div class="txn-item ${t.type}">
+        <div style="display:flex;align-items:center;gap:var(--sp-gutter)">
+          <div class="txn-icon ${t.type}">
+            <span class="material-symbols-outlined" style="font-size:20px">${cat.icon}</span>
+          </div>
+          <div>
+            <p class="text-body" style="font-weight:700;text-transform:uppercase;font-size:14px">
+              ${t.note || cat.label}
+            </p>
+            <p class="text-label-sm clr-muted">${Utils.formatDate(t.date)} · ${cat.label}</p>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;flex-shrink:0">
+          <p class="text-currency" style="color:${color}">${sign} ${Utils.formatRupiah(t.amount)}</p>
+          <button class="txn-delete-btn btn-delete-txn no-print" data-id="${t.id}" aria-label="Hapus transaksi">
+            <span class="material-symbols-outlined" style="font-size:18px">delete_outline</span>
+          </button>
+        </div>
+      </div>`;
+  }
+
+  render();
+});
+</script>
+</body>
+</html>
