@@ -150,19 +150,11 @@ function getUserTransactions() {
 }
 
 // Auth Router
-const getFileName = () => {
-    try {
-        const path = window.location.pathname;
-        const fileName = path.substring(path.lastIndexOf('/') + 1);
-        return fileName || 'index.html';
-    } catch (e) {
-        console.error('Error parsing URL:', e);
-        return 'index.html';
-    }
-};
-
-const currentPage = getFileName();
-const authPages = ['login.html', 'register.html'];
+const path = window.location.pathname.toLowerCase();
+const isLoginPage = path.includes('login');
+const isRegisterPage = path.includes('register');
+const isSetupPage = path.includes('setup');
+const isIndexPage = path.includes('index') || path.endsWith('/') || (!isLoginPage && !isRegisterPage && !isSetupPage && !path.includes('settings'));
 
 let currentUser = null;
 try {
@@ -173,13 +165,13 @@ try {
 
 // Global Routing
 try {
-    if (!currentUser && !authPages.includes(currentPage)) {
+    if (!currentUser && !isLoginPage && !isRegisterPage) {
         window.location.href = 'login.html';
-    } else if (currentUser && authPages.includes(currentPage)) {
+    } else if (currentUser && (isLoginPage || isRegisterPage)) {
         window.location.href = 'index.html';
-    } else if (currentUser && (!currentUser.monthlyLimit || currentUser.monthlyLimit <= 0) && currentPage !== 'setup.html') {
+    } else if (currentUser && (!currentUser.monthlyLimit || currentUser.monthlyLimit <= 0) && !isSetupPage) {
         window.location.href = 'setup.html';
-    } else if (currentUser && currentUser.monthlyLimit > 0 && currentPage === 'setup.html') {
+    } else if (currentUser && currentUser.monthlyLimit > 0 && isSetupPage) {
         window.location.href = 'index.html';
     }
 } catch (e) {
@@ -394,7 +386,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Dashboard Logic
-        if (currentPage === 'index.html' || currentPage === '') {
+        if (isIndexPage) {
             renderDashboard();
 
             const txForm = document.getElementById('txForm');
