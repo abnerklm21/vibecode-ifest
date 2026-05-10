@@ -390,3 +390,100 @@ select.form-control {
 .auth-links a:hover {
     text-decoration: underline;
 }
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        padding: 1rem;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: var(--bg-color);
+    }
+
+    .sidebar-logo {
+        margin-bottom: 0;
+        font-size: 1.5rem;
+    }
+
+    .sidebar nav {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0;
+    }
+
+    .nav-link {
+        margin-bottom: 0;
+        padding: 0.5rem 0.8rem;
+        font-size: 0.9rem;
+        border-left: none;
+        border-bottom: 2px solid transparent;
+    }
+
+    .nav-link:hover, .nav-link.active {
+        border-left: none;
+        border-bottom: 2px solid var(--primary-color);
+        box-shadow: none;
+    }
+
+    .main-content {
+        padding: 1rem;
+    }
+
+    .top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .auth-card {
+        padding: 1.5rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .chart-container {
+        height: 300px;
+    }
+
+    .toast-container {
+        bottom: 1rem;
+        right: 1rem;
+        left: 1rem;
+    }
+
+    .toast {
+        margin-top: 0.5rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .sidebar-logo {
+        font-size: 1.2rem;
+    }
+    
+    .nav-link {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.6rem;
+    }
+
+    .card-value {
+        font-size: 1.5rem;
+    }
+}

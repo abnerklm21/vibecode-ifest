@@ -150,13 +150,18 @@ function getUserTransactions() {
 }
 
 // Auth Router
-let currentPage = 'index.html';
-try {
-    currentPage = window.location.pathname.split('/').pop() || 'index.html';
-} catch (e) {
-    console.error('Error parsing URL:', e);
-}
+const getFileName = () => {
+    try {
+        const path = window.location.pathname;
+        const fileName = path.substring(path.lastIndexOf('/') + 1);
+        return fileName || 'index.html';
+    } catch (e) {
+        console.error('Error parsing URL:', e);
+        return 'index.html';
+    }
+};
 
+const currentPage = getFileName();
 const authPages = ['login.html', 'register.html'];
 
 let currentUser = null;
@@ -166,6 +171,7 @@ try {
     console.error('Error initializing user:', e);
 }
 
+// Global Routing
 try {
     if (!currentUser && !authPages.includes(currentPage)) {
         window.location.href = 'login.html';
@@ -245,12 +251,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     users.push(newUser);
                     saveUsers(users);
-                    showToast('Registration successful!', 'success');
+                    
+                    // Auto-login after registration
+                    setCurrentUserId(newUser.id);
+                    
+                    showToast('Identity Created. Initializing...', 'success');
                     setTimeout(() => {
                         try {
-                            window.location.href = 'login.html';
+                            window.location.href = 'setup.html';
                         } catch(err) {
                             console.error('Redirect error:', err);
+                            window.location.href = 'index.html';
                         }
                     }, 1500);
                 } catch (err) {
@@ -436,6 +447,7 @@ let txChartInstance = null;
 
 function renderDashboard() {
     try {
+        if (!currentUser) return;
         const transactions = getUserTransactions();
         
         let totalIncome = 0;
