@@ -55,9 +55,6 @@
       PENGATURAN
     </a>
   </nav>
-  <a href="settings.html" style="color:var(--clr-primary);transition:opacity 0.2s" class="no-print">
-    <span class="material-symbols-outlined">settings</span>
-  </a>
 </header>
 
 <!-- MAIN CONTENT -->
@@ -85,7 +82,7 @@
 
       <!-- Pemasukan -->
       <div class="glass-card" style="padding:var(--sp-md);flex:1;display:flex;flex-direction:column;justify-content:center">
-        <h3 class="text-label clr-muted" style="margin-bottom:8px">PEMASUKAN (BLN INI)</h3>
+        <h3 class="text-label clr-muted" style="margin-bottom:8px">PEMASUKAN (BULAN INI)</h3>
         <div style="display:flex;align-items:baseline;gap:8px">
           <span class="text-currency clr-primary">Rp</span>
           <span class="text-headline-md clr-primary" id="income-value">0</span>
@@ -94,7 +91,7 @@
 
       <!-- Pengeluaran -->
       <div class="glass-card" style="padding:var(--sp-md);flex:1;display:flex;flex-direction:column;justify-content:center;gap:10px;border-color:rgba(255,180,171,0.2)">
-        <h3 class="text-label clr-muted" style="margin-bottom:4px">PENGELUARAN (BLN INI)</h3>
+        <h3 class="text-label clr-muted" style="margin-bottom:4px">PENGELUARAN (BULAN INI)</h3>
         <div style="display:flex;align-items:baseline;gap:8px">
           <span class="text-currency clr-expense">Rp</span>
           <span class="text-headline-md clr-expense" id="expense-value">0</span>
@@ -221,6 +218,11 @@
             <input id="modal-date" type="date"
                    style="background:transparent;border:none;outline:none;color:var(--clr-on-surface);font-family:var(--font-sans);font-size:16px;width:100%;cursor:pointer">
           </div>
+          <button class="btn-outline" id="btn-select-date" type="button"
+                  style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:var(--sp-sm);padding:10px">
+            <span class="material-symbols-outlined" style="font-size:18px">event</span>
+            PILIH TANGGAL
+          </button>
         </div>
         <div class="form-field">
           <label class="form-label" for="modal-note">CATATAN (OPSIONAL)</label>
@@ -238,12 +240,6 @@
 
     <!-- Footer -->
     <div class="modal-footer">
-      <button class="btn-outline no-print" id="btn-print-from-modal"
-              style="display:flex;align-items:center;gap:8px;padding:10px 16px"
-              onclick="window.location.href='transactions.html'">
-        <span class="material-symbols-outlined" style="font-size:18px">print</span>
-        Cetak Laporan
-      </button>
       <div style="display:flex;gap:var(--sp-sm);flex:1;justify-content:flex-end">
         <button class="btn-outline" id="btn-modal-cancel" style="padding:10px 20px">BATAL</button>
         <button class="btn-primary" id="btn-modal-save"

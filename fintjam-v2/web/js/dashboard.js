@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Bar group
       const group = document.createElement('div');
-      group.style.cssText = 'display:flex;align-items:flex-end;gap:4px;flex:1;justify-content:center';
+      group.style.cssText = 'display:flex;align-items:flex-end;gap:4px;flex:1;height:100%;justify-content:center';
 
       if (d.income > 0) {
         const bar = document.createElement('div');
@@ -236,6 +236,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // Date default
   const dateInput = document.getElementById('modal-date');
   if (dateInput) dateInput.value = Utils.todayISO();
+
+  const selectDateBtn = document.getElementById('btn-select-date');
+  selectDateBtn && selectDateBtn.addEventListener('click', () => {
+    if (typeof dateInput.showPicker === 'function') dateInput.showPicker();
+    else dateInput.focus();
+  });
 
   function resetModal() {
     selectedCategory = null;

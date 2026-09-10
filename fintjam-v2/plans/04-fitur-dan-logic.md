@@ -105,12 +105,12 @@ Submit:
 - Hover: neon glow effect
 
 **Card 2: Pemasukan Bulan Ini (col-span-4, bagian atas)**
-- Label: "PEMASUKAN (BLN INI)"
+- Label: "PEMASUKAN (BULAN INI)"
 - Nilai: warna primary (purple)
 - Sumber data: sum transaksi income bulan & tahun ini
 
 **Card 3: Pengeluaran Bulan Ini (col-span-4, bagian bawah)**
-- Label: "PENGELUARAN (BLN INI)"
+- Label: "PENGELUARAN (BULAN INI)"
 - Nilai: warna error (red)
 - Progress bar: `expense/limit × 100%`
 - Warna progress: hijau (< 60%), kuning (60–79%), merah (≥ 80%)

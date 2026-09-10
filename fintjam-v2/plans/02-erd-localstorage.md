@@ -194,7 +194,7 @@ Semua kalkulasi dilakukan real-time dari data LocalStorage:
 ```
 Total Saldo      = Σ income.amount - Σ expense.amount (semua waktu, per user)
 Pemasukan Bulan  = Σ income.amount  (bulan & tahun saat ini, per user)
-Pengeluaran Bln  = Σ expense.amount (bulan & tahun saat ini, per user)
+Pengeluaran Bulan  = Σ expense.amount (bulan & tahun saat ini, per user)
 Sisa Limit       = User.monthlyLimit - Pengeluaran Bulan
 Persentase Limit = (Pengeluaran Bulan / User.monthlyLimit) × 100
 ```
